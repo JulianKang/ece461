@@ -71,6 +71,7 @@ class repoConnection {
         this.error_occurred = false;
         this.initializationPromise = null;
         this.githubkey = githubkey;
+        this.original_url = url;
         this.url = url;
         this.repo = '';
         this.org = '';
@@ -83,7 +84,7 @@ class repoConnection {
                 if (processedUrl) {
                     const urlParts = processedUrl.split('/');
                     this.org = urlParts[urlParts.length - 2];
-                    this.repo = urlParts[urlParts.length - 1].split('.')[0];
+                    this.repo = urlParts[urlParts.length - 1]; //.split('.')[0];
                     this.url = processedUrl;
                 }
                 else {
@@ -132,7 +133,7 @@ class repoConnection {
     queryNPM(url) {
         return __awaiter(this, void 0, void 0, function* () {
             const urlParts = url.split('/');
-            const packageName = urlParts[urlParts.length - 1].split('.')[0];
+            const packageName = urlParts[urlParts.length - 1]; //.split('.')[0];
             try {
                 const packageInfo = yield (0, query_registry_1.getPackageManifest)({ name: packageName });
                 if (packageInfo.gitRepository && packageInfo.gitRepository.url) {

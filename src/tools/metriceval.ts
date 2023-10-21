@@ -38,7 +38,7 @@ export class metricEvaluation {
         const open_issues: any = this.communicator.general['open_issues_count'];
         const watchers_count: any = this.communicator.general['watchers_count'];
         this.correctness = Math.max(1 - Math.log(open_issues) / Math.log(watchers_count), 0)
-        this.correctness = parseFloat(this.correctness.toFixed(5));
+        this.correctness = parseFloat(this.correctness.toFixed(5)) || 0;
       }
     }
     
@@ -148,7 +148,7 @@ export class metricEvaluation {
 
     logAll(){
       const logEntry = {
-        "URL": this.communicator.connection.url,
+        "URL": this.communicator.connection.original_url,
         "NET_SCORE": this.score,
         "RAMP_UP_SCORE": this.rampUp,
         "CORRECTNESS_SCORE": this.correctness,
