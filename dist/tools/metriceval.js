@@ -40,7 +40,7 @@ class metricEvaluation {
             const open_issues = this.communicator.general['open_issues_count'];
             const watchers_count = this.communicator.general['watchers_count'];
             this.correctness = Math.max(1 - Math.log(open_issues) / Math.log(watchers_count), 0);
-            this.correctness = parseFloat(this.correctness.toFixed(5));
+            this.correctness = parseFloat(this.correctness.toFixed(5)) || 0;
         }
     }
     getRampUp() {
@@ -138,11 +138,17 @@ class metricEvaluation {
         return this.score;
     }
     logAll() {
-        const output = { "URL": this.communicator.connection.url, "NET_SCORE": this.score, "RAMP_UP_SCORE": this.rampUp, "CORRECTNESS_SCORE": this.correctness, "BUS_FACTOR_SCORE": this.busFactor, "RESPONSIVE_MAINTAINER_SCORE": this.responsivness, "LICENSE_SCORE": this.license
+        const logEntry = {
+            "URL": this.communicator.connection.original_url,
+            "NET_SCORE": this.score,
+            "RAMP_UP_SCORE": this.rampUp,
+            "CORRECTNESS_SCORE": this.correctness,
+            "BUS_FACTOR_SCORE": this.busFactor,
+            "RESPONSIVE_MAINTAINER_SCORE": this.responsivness,
+            "LICENSE_SCORE": this.license
         };
-        //const outputString: string = `{"URL": ${this.communicator.connection.url}, "NET_SCORE": ${this.score}, "RAMP_UP_SCORE": ${this.rampUp}, "CORRECTNESS_SCORE": ${this.correctness}, "BUS_FACTOR_SCORE": ${this.busFactor}, "RESPONSIVE_MAINTAINER_SCORE": ${this.responsivness}, "LICENSE_SCORE": ${this.license}}`;
-        const outputString = JSON.stringify(output, null, 2);
-        console.log(outputString);
+        const logEntryString = JSON.stringify(logEntry);
+        logger_1.default.info(logEntryString);
         //logger.info(outputString)
     }
 }

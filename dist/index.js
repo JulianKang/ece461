@@ -54,7 +54,7 @@ program
     // console.log('Running tests...');
     // Your test logic here
     try {
-        (0, child_process_1.execSync)(`cd ../ && npx jest --silent --coverage --coverageReporters='json-summary' --config jest.config.custom.js`, { stdio: 'inherit' });
+        (0, child_process_1.execSync)(`cd ../ && npx jest --silent --coverage --coverageReporters=json-summary --config jest.config.custom1.js && npx jest --silent --coverage --coverageReporters=json-summary --config jest.config.custom.js`, { stdio: 'inherit' });
     }
     catch (error) {
         if (error instanceof Error) {

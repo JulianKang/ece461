@@ -38,10 +38,12 @@ export class repoConnection{
   repo: string;
   org: string;
   error_occurred: boolean = false;
+  original_url: string;
   private initializationPromise: Promise<void> | null = null;
   
   constructor(url: string, githubkey: string) {
     this.githubkey = githubkey;
+    this.original_url = url;
     this.url = url;
     this.repo = '';
     this.org = '';
@@ -54,7 +56,7 @@ export class repoConnection{
       if (processedUrl) {
         const urlParts: string[] = processedUrl.split('/');
         this.org = urlParts[urlParts.length - 2];
-        this.repo = urlParts[urlParts.length - 1].split('.')[0];
+        this.repo = urlParts[urlParts.length - 1]//.split('.')[0];
         this.url = processedUrl;
       } else {
         logger.error(`Initialization failed: Github URL not Found. for ${this.url}`);
@@ -96,10 +98,9 @@ export class repoConnection{
 
   async queryNPM(url: string): Promise<string | null>{
     const urlParts: string[] = url.split('/');
-    const packageName: string = urlParts[urlParts.length - 1].split('.')[0];
+    const packageName: string = urlParts[urlParts.length - 1]//.split('.')[0];
     try{
       const packageInfo: PackageManifest = await getPackageManifest({ name: packageName });
-
       if (packageInfo.gitRepository && packageInfo.gitRepository.url) {
         return packageInfo.gitRepository.url;
       }
@@ -125,7 +126,6 @@ async queryGithubapi(queryendpoint: string): Promise<AxiosResponse<any[]> | null
         },
       });
       const endpoint: string = `repos/${this.org}/${this.repo}${queryendpoint}`;
-      
       let response: AxiosResponse<any[]>;
       let count = 10; // Maximum retry count for 202 responses
       let retries = 0;
@@ -148,7 +148,6 @@ async queryGithubapi(queryendpoint: string): Promise<AxiosResponse<any[]> | null
           await new Promise((resolve) => setTimeout(resolve, retryDelay));
         }
       } while ((response.status === 202 && count > 0) || response.status === 403);
-  
       return response;
     } catch (error) {
       logger.error(`${error}`);

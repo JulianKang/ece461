@@ -45,7 +45,7 @@ const path = __importStar(require("path"));
 const readURLs = (fileName) => __awaiter(void 0, void 0, void 0, function* () {
     const urls = [];
     const urlFile = path.join(__dirname, ('../' + fileName));
-    yield fsPromise.open(urlFile, 'r')
+    yield fsPromise.open(fileName, 'r')
         .then((response) => __awaiter(void 0, void 0, void 0, function* () {
         var e_1, _a;
         try {
@@ -62,9 +62,28 @@ const readURLs = (fileName) => __awaiter(void 0, void 0, void 0, function* () {
             finally { if (e_1) throw e_1.error; }
         }
     }))
-        .catch(() => {
-        logger_1.default.error(`File not found at: ${urlFile}`);
-    });
+        .catch(() => __awaiter(void 0, void 0, void 0, function* () {
+        yield fsPromise.open(urlFile, 'r')
+            .then((response) => __awaiter(void 0, void 0, void 0, function* () {
+            var e_2, _d;
+            try {
+                for (var _e = __asyncValues(response.readLines()), _f; _f = yield _e.next(), !_f.done;) {
+                    const line = _f.value;
+                    urls.push(line);
+                }
+            }
+            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+            finally {
+                try {
+                    if (_f && !_f.done && (_d = _e.return)) yield _d.call(_e);
+                }
+                finally { if (e_2) throw e_2.error; }
+            }
+        }))
+            .catch(() => {
+            logger_1.default.error(`File not found at: ${urlFile}`);
+        });
+    }));
     return urls;
 });
 exports.readURLs = readURLs;
