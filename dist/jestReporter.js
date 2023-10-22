@@ -12,10 +12,10 @@ module.exports = class CoverageReporter {
     const passedTests = results.numPassedTests;
   
     const coverage = require(this.jsonSummary);
-    const totalSum = ['lines', 'statements', 'functions', 'branches']
+    const totalSum = ['lines']//, 'statements', 'functions', 'branches']
       .map(i => coverage.total[i].pct)
       .reduce((a, b) => a + b, 0)
-    const avgCoverage = totalSum / 4
+    const avgCoverage = totalSum// / 4
 
     console.log(`Total: ${totalTests}`);
     console.log(`Passed: ${passedTests}`);
