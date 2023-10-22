@@ -92,7 +92,7 @@ def run_urlfile() -> int:
         print(f"{RED}> URL_FILE output is not a valid module score.{RESET}")
     
     os.environ["LOG_FILE"] = ""
-    url_file = CLI_CMD_WRAPPER("./run /home/shay/a/bboardle/src/ece461/one-url.txt")
+    url_file = CLI_CMD_WRAPPER("./run /home/shay/a/nbielans/Classes/ECE46100/ece461/one-url.txt")
     url_file_rc, output = url_file.run()
     if url_file_rc is False:
         total_correct += 1

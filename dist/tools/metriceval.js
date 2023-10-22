@@ -149,7 +149,6 @@ class metricEvaluation {
         };
         const logEntryString = JSON.stringify(logEntry);
         logger_1.default.info(logEntryString);
-        //logger.info(outputString)
     }
 }
 exports.metricEvaluation = metricEvaluation;

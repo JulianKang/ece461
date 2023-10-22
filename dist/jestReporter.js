@@ -12,14 +12,14 @@ module.exports = class CoverageReporter {
     const passedTests = results.numPassedTests;
   
     const coverage = require(this.jsonSummary);
-    const totalSum = ['lines', 'statements', 'functions', 'branches']
+    const totalSum = ['lines']
       .map(i => coverage.total[i].pct)
       .reduce((a, b) => a + b, 0)
-    const avgCoverage = totalSum / 4
+    const avgCoverage = totalSum
 
-    console.log(`Total: ${totalTests}`);
-    console.log(`Passed: ${passedTests}`);
-    console.log(`Coverage: ${avgCoverage.toFixed(2)} %`)
+    // console.log(`Total: ${totalTests}`);
+    // console.log(`Passed: ${passedTests}`);
+    // console.log(`Coverage: ${avgCoverage.toFixed(2)} %`)
     console.log(`${passedTests}/${totalTests} test cases passed. ${avgCoverage.toFixed(2)}% line coverage achieved.`);
   } 
 }

@@ -1,9 +1,10 @@
 import {metricEvaluation} from '../../src/tools/metriceval';
 import {repoCommunicator} from '../../src/tools/api';
 import {repoConnection} from '../../src/tools/api';
-import {describe, test, expect, beforeAll} from '@jest/globals';
+import {describe, test, expect, beforeAll, jest} from '@jest/globals';
 import * as dotenv from 'dotenv'
 import { freemem } from 'os';
+import logger from '../../src/logger';
 
 process.env.DOTENV_CONFIG_PATH = '../../../.env';
 dotenv.config();
@@ -76,6 +77,17 @@ describe('metricEvaluation', () => {
             expect(metric.score).toBeLessThanOrEqual(1);
         });
     });  
+
+    test('logAll', () => {
+        const logger_info_spy = jest.spyOn(logger, "info");
+        
+        metrics.forEach(metric => {
+            metric.logAll();
+        });
+        expect(logger_info_spy).toBeCalledTimes(5);
+
+        logger_info_spy.mockRestore();
+    });
 });
 
 metrics.forEach(() => {freemem();})

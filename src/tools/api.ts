@@ -235,9 +235,9 @@ export class repoCommunicator {
               if (error) {
                 if (error.message.includes('already exists')) {
                   resolve(); // Repository already exists, no need to clone again
-              } else {
+                } else {
                   reject(error);
-              }
+                }
               } else {
                   resolve();
               }
