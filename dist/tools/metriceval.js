@@ -152,5 +152,4 @@ class metricEvaluation {
     }
 }
 exports.metricEvaluation = metricEvaluation;
-exports.default = metricEvaluation;
 //# sourceMappingURL=metriceval.js.map
