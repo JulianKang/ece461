@@ -159,6 +159,5 @@ export class metricEvaluation {
     
       const logEntryString = JSON.stringify(logEntry);
       logger.info(logEntryString);
-      //logger.info(outputString)
     }
   }
